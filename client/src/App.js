@@ -2,6 +2,7 @@ import './App.css';
 import {fabric} from 'fabric';
 import {useEffect, useState} from "react";
 import {generateTexts} from './Text';
+import TermList from "./Components/TermList";
 const width = 1500;
 const height = 1000;
 const API = 'http://localhost:5000'
@@ -41,11 +42,9 @@ function App() {
 
   return (
     <div className="App">
-      <canvas id="canvas" width={width} height={height}></canvas>
-      <button onClick={sendPositions}>send</button>
-      <div>
-
-      </div>
+      {/*<canvas id="canvas" width={width} height={height}></canvas>*/}
+      {/*<button onClick={sendPositions}>send</button>*/}
+      <TermList />
     </div>
   );
 }
