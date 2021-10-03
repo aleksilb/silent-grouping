@@ -1,7 +1,7 @@
 import List from '@mui/material/List'
-import {Button, IconButton, ListItem, ListItemButton, ListItemIcon, TextField} from "@mui/material";
+import {Button, IconButton, ListItem, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 function TermList() {
     const [newTerm, setNewTerm] = useState(null);

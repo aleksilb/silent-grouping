@@ -1,4 +1,4 @@
-from clustering import Clustering
+from clustering import calculate_groups
 
 
 class Voter:
@@ -32,7 +32,7 @@ class Grouping:
         return len(self.voters)
 
     def cluster(self):
-        clustering = Clustering()
+        voters_positions = []
         for voter in self.voters:
-            clustering.add_positions(voter.positions)
-        return clustering.calculate_groups(self.get_items())
+            voters_positions.append(voter.positions)
+        return calculate_groups(voters_positions, self.get_items())
