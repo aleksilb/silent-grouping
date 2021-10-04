@@ -1,52 +1,17 @@
 import './App.css';
-import {fabric} from 'fabric';
-import {useEffect, useState} from "react";
-import {generateTexts} from './Text';
 import TermList from "./Components/TermList";
-const width = 1500;
-const height = 1000;
-const API = 'http://localhost:5000'
+import Board from "./Components/Board";
+import {useState} from "react";
 
 function App() {
-  const [texts, setTexts] = useState([]);
+    const [page, setPage] = useState('terms');
 
-  useEffect(() => {
-    let canvas = new fabric.Canvas('canvas');
-
-    let genTexts = generateTexts(width, height);
-    for (let text of genTexts) {
-        canvas.add(text);
-    }
-    setTexts(genTexts);
-  }, []);
-
-  function sendPositions() {
-      let positions = [];
-      for(let text of texts) {
-          positions.push([
-              text.get('left'),
-              text.get('top')
-          ])
-      }
-      console.log(positions);
-      fetch(API + '/positions', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(positions)
-      }).then(result => {
-          console.log(result)
-      });
-  }
-
-  return (
-    <div className="App">
-      {/*<canvas id="canvas" width={width} height={height}></canvas>*/}
-      {/*<button onClick={sendPositions}>send</button>*/}
-      <TermList />
-    </div>
-  );
+    return (
+        <div className="App">
+            {(page === 'terms') ? <TermList/> : null}
+            {(page === 'board') ? <Board/> : null}
+        </div>
+    );
 }
 
 export default App;
