@@ -3,7 +3,7 @@ import {Button, IconButton, ListItem, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
 
-function TermList() {
+function TermList(props) {
     const [newTerm, setNewTerm] = useState(null);
     const [terms, setTerms] = useState([]);
 
@@ -44,6 +44,7 @@ function TermList() {
             onChange={evt => updateNewTerm(evt)}
         />
         <Button variant="contained" onClick={addNewTerm}>Add new term</Button>
+        <Button variant="contained" onClick={props.finishFunction}>Finish</Button>
     </div>
 }
 

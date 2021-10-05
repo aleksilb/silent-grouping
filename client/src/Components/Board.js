@@ -1,11 +1,12 @@
 import {fabric} from 'fabric';
 import {useEffect, useState} from "react";
 import {generateTexts} from '../Text';
+import {Button} from "@mui/material";
 const width = 1500;
 const height = 1000;
 const API = 'http://localhost:5000'
 
-function Board() {
+function Board(props) {
     const [texts, setTexts] = useState([]);
 
     useEffect(() => {
@@ -36,12 +37,14 @@ function Board() {
         }).then(result => {
             console.log(result)
         });
+
+        props.finishFunction();
     }
 
     return (
         <div className="Board">
             <canvas id="canvas" width={width} height={height}></canvas>
-            <button onClick={sendPositions}>send</button>
+            <Button onClick={sendPositions}>send</Button>
         </div>
     );
 }
