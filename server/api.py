@@ -9,8 +9,15 @@ CORS(app)
 
 @app.route('/grouping', methods=['POST'])
 def new_grouping():
-    grouping_id = add_grouping()
+    info = request.json
+    grouping_id = add_grouping(info['name'], info['description'])
     return str(grouping_id)
+
+
+@app.route('/grouping/<grouping_id>', methods=['GET'])
+def fetch_grouping(grouping_id):
+    grouping = get_grouping(int(grouping_id))
+    return grouping.to_string()
 
 
 @app.route('/voter/<grouping_id>', methods=['POST'])

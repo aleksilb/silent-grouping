@@ -8,8 +8,8 @@ def get_grouping(grouping_id) -> Grouping:
     return groupings[grouping_id]
 
 
-def add_grouping():
-    groupings.append(Grouping())
+def add_grouping(name, description):
+    groupings.append(Grouping(name, description))
     return len(groupings) - 1
 
 

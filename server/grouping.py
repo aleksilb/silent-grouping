@@ -1,3 +1,5 @@
+import json
+
 from clustering import calculate_groups
 
 
@@ -16,7 +18,9 @@ class Voter:
 
 class Grouping:
 
-    def __init__(self):
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
         self.voters = []
 
     def add_voter(self, voter: Voter):
@@ -36,3 +40,6 @@ class Grouping:
         for voter in self.voters:
             voters_positions.append(voter.positions)
         return calculate_groups(voters_positions, self.get_items())
+
+    def to_string(self):
+        return json.dumps({"name": self.name, "description": self.description})
