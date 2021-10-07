@@ -18,11 +18,12 @@ function NewGrouping(props) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(result => {
-            console.log(result)
+        })
+            .then(response => response.text())
+            .then(groupingId => {
+                console.log(groupingId);
+                props.groupingCreated(groupingId);
         });
-
-        props.finishFunction();
     }
 
     return <div>

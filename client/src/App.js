@@ -1,9 +1,9 @@
 import './App.css';
-import NewGrouping from "./Components/NewGrouping";
 import TermList from "./Components/TermList";
 import Board from "./Components/Board";
 import Results from "./Components/Results";
 import {useState} from "react";
+import Start from "./Components/Start";
 const pages = ['new', 'terms', 'board', 'results'];
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
 
     return (
         <div className="App">
-            {(page === 'new') ? <NewGrouping finishFunction={pageFinished}/> : null}
+            {(page === 'new') ? <Start finishFunction={pageFinished}/> : null}
             {(page === 'terms') ? <TermList finishFunction={pageFinished}/> : null}
             {(page === 'board') ? <Board finishFunction={pageFinished}/> : null}
             {(page === 'results') ? <Results/> : null}
