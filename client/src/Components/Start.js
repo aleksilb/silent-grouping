@@ -19,12 +19,17 @@ function Start(props) {
     }
 
     return <div>
-        <h1>Start new grouping</h1>
-        <NewGrouping groupingCreated={groupingCreated}/>
+        {groupingId == null ?
+            <div><h1>Start new grouping</h1> <NewGrouping groupingCreated={groupingCreated}/></div>
+            :null
+        }
+
         <h1>Join grouping</h1>
         <TextField
             id="grouping-field"
             label="Grouping id"
+            InputLabelProps={{ shrink: true }}
+            value={groupingId}
             onChange={evt => setGroupingId(evt.target.value)}
         />
         <Button  onClick={joinGrouping}>Join</Button>
