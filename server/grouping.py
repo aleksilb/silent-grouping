@@ -1,13 +1,13 @@
 import json
-from enum import Enum, auto
+from enum import Enum
 
 from clustering import calculate_groups
 
 
 class Stage(Enum):
-    COLLECTING = auto()
-    GROUPING = auto()
-    DONE = auto()
+    COLLECTING = "Collecting"
+    GROUPING = "Grouping"
+    DONE = "Done"
 
 
 class Voter:
@@ -59,5 +59,5 @@ class Grouping:
         return json.dumps({
             "name": self.name,
             "description": self.description,
-            "stage": self.stage
+            "stage": self.stage.value
         })
