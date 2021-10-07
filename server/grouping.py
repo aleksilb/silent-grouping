@@ -1,6 +1,13 @@
 import json
+from enum import Enum, auto
 
 from clustering import calculate_groups
+
+
+class Stage(Enum):
+    COLLECTING = auto()
+    GROUPING = auto()
+    DONE = auto()
 
 
 class Voter:
@@ -18,10 +25,16 @@ class Voter:
 
 class Grouping:
 
+    name: str
+    description: str
+    stage: Stage
+    voters: list[Voter]
+
     def __init__(self, name, description):
         self.name = name
         self.description = description
         self.voters = []
+        self.stage = Stage.COLLECTING
 
     def add_voter(self, voter: Voter):
         self.voters.append(voter)
@@ -36,10 +49,15 @@ class Grouping:
         return len(self.voters)
 
     def cluster(self):
+        self.stage = Stage.DONE
         voters_positions = []
         for voter in self.voters:
             voters_positions.append(voter.positions)
         return calculate_groups(voters_positions, self.get_items())
 
     def to_string(self):
-        return json.dumps({"name": self.name, "description": self.description})
+        return json.dumps({
+            "name": self.name,
+            "description": self.description,
+            "stage": self.stage
+        })
