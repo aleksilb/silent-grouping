@@ -2,6 +2,7 @@ import List from '@mui/material/List'
 import {Button, IconButton, ListItem, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
+import * as Server from "../scripts/server";
 
 function TermList(props) {
     const [newTerm, setNewTerm] = useState(null);
@@ -21,6 +22,12 @@ function TermList(props) {
         const newTerms = Array.from(terms);
         newTerms.splice(index, 1);
         setTerms(newTerms);
+    }
+
+    function sendTerms() {
+        Server.sendTerms(props.voterId, terms).then(() => {
+            props.finishFunction();
+        });
     }
 
     return <div>
@@ -44,7 +51,7 @@ function TermList(props) {
             onChange={evt => updateNewTerm(evt)}
         />
         <Button variant="contained" onClick={addNewTerm}>Add new term</Button>
-        <Button variant="contained" onClick={props.finishFunction}>Finish</Button>
+        <Button variant="contained" onClick={sendTerms}>Finish</Button>
     </div>
 }
 

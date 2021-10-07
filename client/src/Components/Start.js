@@ -1,23 +1,15 @@
 import NewGrouping from "./NewGrouping";
 import {Button, TextField} from "@mui/material";
 import {useState} from "react";
-const API = 'http://localhost:5000';
+import * as Server from '../scripts/server';
 
 function Start(props) {
     const [groupingId, setGroupingId] = useState(null);
 
     function joinGrouping() {
         if(groupingId != null) {
-            fetch(API + '/voter/'+groupingId, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response.text())
-                .then(voterId => {
-                    console.log(voterId);
-                    props.finishFunction(); //TODO Send voter id
+            Server.joinGrouping(groupingId).then(voterId => {
+                props.voterCreated(voterId);
             });
         }
     }

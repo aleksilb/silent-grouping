@@ -1,28 +1,14 @@
 import {Button, TextField} from "@mui/material";
 import {useState} from "react";
-const API = 'http://localhost:5000';
+import * as Server from '../scripts/server';
 
 function NewGrouping(props) {
     const [name, setName] = useState(null);
     const [description, setDescription] = useState(null);
 
     function createGrouping() {
-        const data = {
-            name: name,
-            description: description
-        }
-
-        fetch(API + '/grouping', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.text())
-            .then(groupingId => {
-                console.log(groupingId);
-                props.groupingCreated(groupingId);
+        Server.createGrouping(name, description).then(groupingId => {
+            props.groupingCreated(groupingId);
         });
     }
 

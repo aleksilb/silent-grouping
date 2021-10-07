@@ -2,9 +2,9 @@ import {fabric} from 'fabric';
 import {useEffect, useState} from "react";
 import {generateTexts} from '../Text';
 import {Button} from "@mui/material";
+import * as Server from '../scripts/server';
 const width = 1500;
 const height = 1000;
-const API = 'http://localhost:5000'
 
 function Board(props) {
     const [texts, setTexts] = useState([]);
@@ -20,6 +20,12 @@ function Board(props) {
     }, []);
 
     function sendPositions() {
+        Server.sendPositions(getPositions()).then(() => {
+            props.finishFunction();
+        });
+    }
+
+    function getPositions() {
         let positions = [];
         for(let text of texts) {
             positions.push([
@@ -27,23 +33,12 @@ function Board(props) {
                 text.get('top')
             ])
         }
-        console.log(positions);
-        fetch(API + '/positions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(positions)
-        }).then(result => {
-            console.log(result)
-        });
-
-        props.finishFunction();
+        return positions;
     }
 
     return (
         <div className="Board">
-            <canvas id="canvas" width={width} height={height}></canvas>
+            <canvas id="canvas" width={width} height={height}/>
             <Button onClick={sendPositions}>send</Button>
         </div>
     );
