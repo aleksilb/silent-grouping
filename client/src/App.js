@@ -9,6 +9,7 @@ const pages = ['new', 'terms', 'board', 'results'];
 function App() {
     const [page, setPage] = useState('new');
     const [voterId, setVoterId] = useState(null);
+    const [groupingId, setGroupingId] = useState(null);
 
     function pageFinished() {
         const currentPageIndex = pages.indexOf(page);
@@ -16,8 +17,9 @@ function App() {
         setPage(nextPage);
     }
 
-    function voterCreated(voterId) {
+    function voterCreated(voterId, groupingId) {
         setVoterId(voterId);
+        setGroupingId(groupingId)
         setPage('terms')
     }
 
@@ -25,7 +27,7 @@ function App() {
         <div className="App">
             {(page === 'new') ? <Start voterCreated={voterCreated}/> : null}
             {(page === 'terms') ? <TermList voterId={voterId} finishFunction={pageFinished}/> : null}
-            {(page === 'board') ? <Board finishFunction={pageFinished}/> : null}
+            {(page === 'board') ? <Board groupingId={groupingId} finishFunction={pageFinished}/> : null}
             {(page === 'results') ? <Results/> : null}
         </div>
     );

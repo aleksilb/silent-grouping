@@ -12,12 +12,14 @@ function Board(props) {
     useEffect(() => {
         let canvas = new fabric.Canvas('canvas');
 
-        let genTexts = generateTexts(width, height);
-        for (let text of genTexts) {
-            canvas.add(text);
-        }
-        setTexts(genTexts);
-    }, []);
+        Server.getTerms(props.groupingId).then(items => {
+            let genTexts = generateTexts(items, width, height);
+            for (let text of genTexts) {
+                canvas.add(text);
+            }
+            setTexts(genTexts);
+        })
+    }, [props.groupingId]);
 
     function sendPositions() {
         Server.sendPositions(getPositions()).then(() => {

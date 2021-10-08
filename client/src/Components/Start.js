@@ -9,7 +9,7 @@ function Start(props) {
     function joinGrouping() {
         if(groupingId != null) {
             Server.joinGrouping(groupingId).then(voterId => {
-                props.voterCreated(voterId);
+                props.voterCreated(voterId, groupingId);
             });
         }
     }

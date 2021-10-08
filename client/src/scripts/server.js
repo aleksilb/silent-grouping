@@ -27,3 +27,7 @@ export function sendPositions(voterId, positions) {
 export function sendTerms(voterId, terms) {
     return post('/items/'+voterId, terms);
 }
+
+export function getTerms(groupingId) {
+    return fetch(API + '/items/'+groupingId).then(response => response.json());
+}
