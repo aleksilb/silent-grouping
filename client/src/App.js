@@ -27,8 +27,8 @@ function App() {
         <div className="App">
             {(page === 'new') ? <Start voterCreated={voterCreated}/> : null}
             {(page === 'terms') ? <TermList voterId={voterId} finishFunction={pageFinished}/> : null}
-            {(page === 'board') ? <Board groupingId={groupingId} finishFunction={pageFinished}/> : null}
-            {(page === 'results') ? <Results/> : null}
+            {(page === 'board') ? <Board voterId={voterId} groupingId={groupingId} finishFunction={pageFinished}/> : null}
+            {(page === 'results') ? <Results groupingId={groupingId}/> : null}
         </div>
     );
 }

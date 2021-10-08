@@ -31,3 +31,8 @@ export function sendTerms(voterId, terms) {
 export function getTerms(groupingId) {
     return fetch(API + '/items/'+groupingId).then(response => response.json());
 }
+
+export function closeGrouping(groupingId) {
+    return fetch(API + '/close/'+groupingId, {method: 'PUT'})
+        .then(response => response.json());
+}

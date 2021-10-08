@@ -22,7 +22,7 @@ function Board(props) {
     }, [props.groupingId]);
 
     function sendPositions() {
-        Server.sendPositions(getPositions()).then(() => {
+        Server.sendPositions(props.voterId, getPositions()).then(() => {
             props.finishFunction();
         });
     }
