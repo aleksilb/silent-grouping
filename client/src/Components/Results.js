@@ -7,7 +7,7 @@ function Results(props) {
     const [groups, setGroups] = useState([]);
 
     useEffect(() => {
-        Server.closeGrouping(props.groupingId).then(groups => {
+        Server.getGroups(props.groupingId).then(groups => {
             setGroups(groups);
         });
     }, [props.groupingId]);

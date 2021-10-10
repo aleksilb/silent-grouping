@@ -32,7 +32,7 @@ export function getTerms(groupingId) {
     return fetch(API + '/items/'+groupingId).then(response => response.json());
 }
 
-export function closeGrouping(groupingId) {
-    return fetch(API + '/close/'+groupingId, {method: 'PUT'})
+export function getGroups(groupingId) {
+    return fetch(API + '/groups/'+groupingId)
         .then(response => response.json());
 }
