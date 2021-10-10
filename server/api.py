@@ -30,16 +30,14 @@ def new_voter(grouping_id):
 def add_items(voter_id):
     items = request.json
     voter = get_voter(int(voter_id))
-    for item in items:
-        voter.add_item(item)
+    voter.add_items(items)
     return "ok"
 
 
 @app.route('/items/<grouping_id>', methods=['GET'])
 def get_items(grouping_id):
     grouping = get_grouping(int(grouping_id))
-    items = grouping.get_items()
-    return json.dumps(items)
+    return json.dumps(grouping.items)
 
 
 @app.route('/positions/<voter_id>', methods=['POST'])
@@ -50,11 +48,10 @@ def post_positions(voter_id):
     return "ok"
 
 
-@app.route('/close/<grouping_id>', methods=['PUT'])
-def close_grouping(grouping_id):
+@app.route('/groups/<grouping_id>', methods=['GET'])
+def get_groups(grouping_id):
     grouping = get_grouping(int(grouping_id))
-    clusters = grouping.cluster()
-    return json.dumps(clusters)
+    return json.dumps(grouping.groups)
 
 
 if __name__ == "__main__":

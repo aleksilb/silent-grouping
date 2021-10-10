@@ -10,50 +10,52 @@ class Stage(Enum):
     DONE = "Done"
 
 
-class Voter:
-
-    def __init__(self):
-        self.items = []
-        self.positions = []
-
-    def add_item(self, item: str):
-        self.items.append(item)
-
-    def add_positions(self, positions):
-        self.positions = positions
-
-
 class Grouping:
 
     name: str
     description: str
     stage: Stage
-    voters: list[Voter]
+    groups: list[list[str]]
+    items: list[str]
+    positions: list[list[list[int]]]
+    num_of_voters: int
+    voters_sent_items: int
+    voters_sent_positions: int
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.voters = []
+        self.groups = []
+        self.items = []
+        self.positions = []
+        self.num_of_voters = 0
+        self.voters_sent_items = 0
+        self.voters_sent_positions = 0
         self.stage = Stage.COLLECTING
 
-    def add_voter(self, voter: Voter):
-        self.voters.append(voter)
+    def add_voter(self):
+        self.num_of_voters += 1
 
-    def get_items(self):
-        all_items = []
-        for voter in self.voters:
-            all_items += voter.items
-        return all_items
+    def add_items(self, items):
+        self.items += items
 
-    def get_num_of_voters(self):
-        return len(self.voters)
+    def add_positions(self, positions):
+        self.positions.append(positions)
+        self.voter_sent_positions()
+
+    def voter_sent_items(self):
+        self.voters_sent_items += 1
+        if self.num_of_voters == self.voters_sent_items:
+            self.stage = Stage.GROUPING
+
+    def voter_sent_positions(self):
+        self.voters_sent_positions += 1
+        if self.num_of_voters == self.voters_sent_positions:
+            self.cluster()
 
     def cluster(self):
+        self.groups = calculate_groups(self.positions, self.items)
         self.stage = Stage.DONE
-        voters_positions = []
-        for voter in self.voters:
-            voters_positions.append(voter.positions)
-        return calculate_groups(voters_positions, self.get_items())
 
     def to_string(self):
         return json.dumps({
@@ -61,3 +63,27 @@ class Grouping:
             "description": self.description,
             "stage": self.stage.value
         })
+
+
+class Voter:
+
+    items_sent: bool
+    positions_sent: bool
+    grouping: Grouping
+
+    def __init__(self, grouping):
+        self.items_sent = False
+        self.positions_sent = False
+        self.grouping = grouping
+        grouping.add_voter()
+
+    def add_items(self, items):
+        if not self.items_sent:
+            self.grouping.add_items(items)
+            self.items_sent = True
+            self.grouping.voter_sent_items()
+
+    def add_positions(self, positions):
+        if not self.positions_sent:
+            self.grouping.add_positions(positions)
+            self.positions_sent = True
