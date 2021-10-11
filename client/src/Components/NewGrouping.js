@@ -3,8 +3,8 @@ import {useState} from "react";
 import * as Server from '../scripts/server';
 
 function NewGrouping(props) {
-    const [name, setName] = useState(null);
-    const [description, setDescription] = useState(null);
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
 
     function createGrouping() {
         Server.createGrouping(name, description).then(groupingId => {
@@ -17,12 +17,14 @@ function NewGrouping(props) {
             id="name-field"
             label="Name"
             variant="outlined"
+            value={name}
             onChange={evt => setName(evt.target.value)}
         />
         <TextField
             id="description-field"
             label="Description"
             variant="outlined"
+            value={description}
             rows={4}
             multiline
             onChange={evt => setDescription(evt.target.value)}

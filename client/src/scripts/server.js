@@ -36,3 +36,8 @@ export function getGroups(groupingId) {
     return fetch(API + '/groups/'+groupingId)
         .then(response => response.json());
 }
+
+export function getGrouping(groupingId) {
+    return fetch(API + '/grouping/' + groupingId)
+        .then(response => response.json());
+}

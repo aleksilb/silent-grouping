@@ -29,7 +29,7 @@ function Start(props) {
             id="grouping-field"
             label="Grouping id"
             InputLabelProps={{ shrink: true }}
-            value={groupingId}
+            value={groupingId || ''}
             onChange={evt => setGroupingId(evt.target.value)}
         />
         <Button  onClick={joinGrouping}>Join</Button>
