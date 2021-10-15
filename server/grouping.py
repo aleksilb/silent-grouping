@@ -5,9 +5,9 @@ from clustering import calculate_groups
 
 
 class Stage(Enum):
-    COLLECTING = "Collecting"
-    GROUPING = "Grouping"
-    DONE = "Done"
+    COLLECTING = "COLLECTING"
+    GROUPING = "GROUPING"
+    DONE = "DONE"
 
 
 class Grouping:
