@@ -9,8 +9,9 @@ def get_grouping(grouping_id) -> Grouping:
 
 
 def add_grouping(name, description):
-    groupings.append(Grouping(name, description))
-    return len(groupings) - 1
+    grouping_id = len(groupings)
+    groupings.append(Grouping(grouping_id, name, description))
+    return grouping_id
 
 
 def get_voter(voter_id) -> Voter:
@@ -18,7 +19,7 @@ def get_voter(voter_id) -> Voter:
 
 
 def add_voter(grouping_id):
+    voter_id = len(voters)
     grouping = get_grouping(grouping_id)
-    voter = Voter(grouping)
-    voters.append(voter)
-    return len(voters) - 1
+    voters.append(Voter(voter_id, grouping))
+    return voter_id

@@ -26,6 +26,12 @@ def new_voter(grouping_id):
     return str(voter_id)
 
 
+@app.route('/voter/<voter_id>', methods=['GET'])
+def fetch_voter(voter_id):
+    voter = get_voter(int(voter_id))
+    return voter.to_string()
+
+
 @app.route('/items/<voter_id>', methods=['POST'])
 def add_items(voter_id):
     items = request.json

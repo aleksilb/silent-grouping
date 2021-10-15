@@ -12,6 +12,7 @@ class Stage(Enum):
 
 class Grouping:
 
+    id: int
     name: str
     description: str
     stage: Stage
@@ -22,7 +23,8 @@ class Grouping:
     voters_sent_items: int
     voters_sent_positions: int
 
-    def __init__(self, name, description):
+    def __init__(self, grouping_id, name, description):
+        self.id = grouping_id
         self.name = name
         self.description = description
         self.groups = []
@@ -59,6 +61,7 @@ class Grouping:
 
     def to_string(self):
         return json.dumps({
+            "id": self.id,
             "name": self.name,
             "description": self.description,
             "stage": self.stage.value
@@ -67,11 +70,13 @@ class Grouping:
 
 class Voter:
 
+    id: int
     items_sent: bool
     positions_sent: bool
     grouping: Grouping
 
-    def __init__(self, grouping):
+    def __init__(self, voter_id, grouping):
+        self.id = voter_id
         self.items_sent = False
         self.positions_sent = False
         self.grouping = grouping
@@ -87,3 +92,11 @@ class Voter:
         if not self.positions_sent:
             self.grouping.add_positions(positions)
             self.positions_sent = True
+
+    def to_string(self):
+        return json.dumps({
+            "id": self.id,
+            "grouping": self.grouping.id,
+            "items_sent": self.items_sent,
+            "positions_sent": self.positions_sent
+        })
