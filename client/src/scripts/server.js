@@ -12,12 +12,12 @@ function post(url, body) {
 
 export function createGrouping(name, description) {
     return post('/grouping', {name: name, description: description})
-        .then(response => response.text())
+        .then(response => response.json())
 }
 
 export function joinGrouping(groupingId) {
     return post('/voter/'+groupingId, null)
-        .then(response => response.text());
+        .then(response => response.json());
 }
 
 export function sendPositions(voterId, positions) {
