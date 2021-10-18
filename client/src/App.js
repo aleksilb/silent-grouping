@@ -32,11 +32,11 @@ function App() {
     return (
         <div className="App">
             {grouping && <GroupingTitle grouping={grouping}/>}
-            {(stage === Stage.Stage.START) ? <Start voterCreated={voterCreated}/> : null}
-            {(stage === Stage.Stage.WAITING) ? <Waiting/> : null}
-            {(stage === Stage.Stage.COLLECTING) ? <TermList voterId={voter.id} finishFunction={pageFinished}/> : null}
-            {(stage === Stage.Stage.GROUPING) ? <Board voterId={voter.id} groupingId={grouping.id} finishFunction={pageFinished}/> : null}
-            {(stage === Stage.Stage.DONE) ? <Results groupingId={grouping.id}/> : null}
+            {stage === Stage.Stage.START && <Start voterCreated={voterCreated}/>}
+            {stage === Stage.Stage.WAITING && <Waiting/>}
+            {stage === Stage.Stage.COLLECTING && <TermList voterId={voter.id} finishFunction={pageFinished}/>}
+            {stage === Stage.Stage.GROUPING && <Board voterId={voter.id} groupingId={grouping.id} finishFunction={pageFinished}/>}
+            {stage === Stage.Stage.DONE && <Results groupingId={grouping.id}/>}
         </div>
     );
 }
