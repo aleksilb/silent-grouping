@@ -10,21 +10,16 @@ function App() {
     const [stage, setStage] = useState(Stage.Stage.START);
     const [voterId, setVoterId] = useState(null);
     const [groupingId, setGroupingId] = useState(null);
-    const StageChecker = Stage.getChecker(stageChanged);
+    const StageChecker = Stage.getChecker(setStage);
 
     useEffect(() => {
-        if(voterId != null) {
-            StageChecker.checkForStageChange(voterId);
+        if(voterId != null && StageChecker != null) {
+            StageChecker.checkForStageChange(voterId).error(console.error);
         }
     }, [voterId, StageChecker]);
 
-    function stageChanged(stage) {
-        console.log("Stage changed " + stage);
-        setStage(stage);
-    }
-
     function pageFinished() {
-        StageChecker.checkForStageChange(voterId);
+        StageChecker.checkForStageChange(voterId).error(console.error);
     }
 
     function voterCreated(voterId, groupingId) {
