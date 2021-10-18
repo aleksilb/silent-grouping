@@ -2,33 +2,43 @@ import './App.css';
 import TermList from "./Components/TermList";
 import Board from "./Components/Board";
 import Results from "./Components/Results";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Start from "./Components/Start";
-const pages = ['new', 'terms', 'board', 'results'];
+import * as Stage from "./scripts/stage";
 
 function App() {
-    const [page, setPage] = useState('new');
+    const [stage, setStage] = useState(Stage.Stage.START);
     const [voterId, setVoterId] = useState(null);
     const [groupingId, setGroupingId] = useState(null);
+    const StageChecker = Stage.getChecker(stageChanged);
+
+    useEffect(() => {
+        if(voterId != null) {
+            StageChecker.checkForStageChange(voterId);
+        }
+    }, [voterId, StageChecker]);
+
+    function stageChanged(stage) {
+        console.log("Stage changed " + stage);
+        setStage(stage);
+    }
 
     function pageFinished() {
-        const currentPageIndex = pages.indexOf(page);
-        const nextPage = pages[currentPageIndex + 1];
-        setPage(nextPage);
+        StageChecker.checkForStageChange(voterId);
     }
 
     function voterCreated(voterId, groupingId) {
         setVoterId(voterId);
-        setGroupingId(groupingId)
-        setPage('terms')
+        setGroupingId(groupingId);
     }
 
     return (
         <div className="App">
-            {(page === 'new') ? <Start voterCreated={voterCreated}/> : null}
-            {(page === 'terms') ? <TermList voterId={voterId} finishFunction={pageFinished}/> : null}
-            {(page === 'board') ? <Board voterId={voterId} groupingId={groupingId} finishFunction={pageFinished}/> : null}
-            {(page === 'results') ? <Results groupingId={groupingId}/> : null}
+            {(stage === Stage.Stage.START) ? <Start voterCreated={voterCreated}/> : null}
+            {(stage === Stage.Stage.WAITING) ? <div>Waiting</div> : null}
+            {(stage === Stage.Stage.COLLECTING) ? <TermList voterId={voterId} finishFunction={pageFinished}/> : null}
+            {(stage === Stage.Stage.GROUPING) ? <Board voterId={voterId} groupingId={groupingId} finishFunction={pageFinished}/> : null}
+            {(stage === Stage.Stage.DONE) ? <Results groupingId={groupingId}/> : null}
         </div>
     );
 }

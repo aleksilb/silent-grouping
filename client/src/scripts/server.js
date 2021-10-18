@@ -41,3 +41,8 @@ export function getGrouping(groupingId) {
     return fetch(API + '/grouping/' + groupingId)
         .then(response => response.json());
 }
+
+export function getVoter(voterId) {
+    return fetch(API + '/voter/' + voterId)
+        .then(response => response.json());
+}
