@@ -1,10 +1,20 @@
-import {Button, TextField} from "@mui/material";
-import {useState} from "react";
+import {Button, Stack, TextField} from "@mui/material";
+import {useEffect, useState} from "react";
 import * as Server from '../scripts/server';
+import Box from "@mui/material/Box";
 
 function CreateGrouping({created}) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [enabled, setEnabled] = useState(false);
+
+    useEffect(() => {
+        if(name.length > 0) {
+            setEnabled(true);
+        } else {
+            setEnabled(false);
+        }
+    }, [name]);
 
     function createGrouping() {
         Server.createGrouping(name, description).then(grouping => {
@@ -12,26 +22,27 @@ function CreateGrouping({created}) {
         });
     }
 
-    return <div>
-        <h1>Start new grouping</h1>
-        <TextField
-            id="name-field"
-            label="Name"
-            variant="outlined"
-            value={name}
-            onChange={evt => setName(evt.target.value)}
-        />
-        <TextField
-            id="description-field"
-            label="Description"
-            variant="outlined"
-            value={description}
-            rows={4}
-            multiline
-            onChange={evt => setDescription(evt.target.value)}
-        />
-        <Button variant="contained" onClick={createGrouping}>Start new grouping</Button>
-    </div>
+    return <Box >
+        <h1>Start a New Grouping</h1>
+        <Stack sx={{p:5}} spacing={2}>
+            <TextField
+                id="name-field"
+                label="Name"
+                variant="outlined"
+                value={name}
+                onChange={evt => setName(evt.target.value)}/>
+
+            <TextField
+                id="description-field"
+                label="Description"
+                variant="outlined"
+                value={description}
+                rows={4}
+                multiline
+                onChange={evt => setDescription(evt.target.value)}/>
+            <Button disabled={!enabled} variant="contained" onClick={createGrouping}>Create grouping</Button>
+        </Stack>
+    </Box>
 }
 
 export default CreateGrouping;
