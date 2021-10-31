@@ -5,28 +5,33 @@ import JoinGrouping from "./JoinGrouping";
 import NewGrouping from "./NewGrouping";
 import {Divider, Grid} from "@mui/material";
 
-function Start({voterCreated}) {
-    const [created, setCreated] = useState(false);
+function Start({voterCreated, groupingCreated}) {
     const [grouping, setGrouping] = useState(null);
 
-    function groupingCreated(grouping) {
+    function _groupingCreated(grouping) {
         setGrouping(grouping);
-        setCreated(true);
+        groupingCreated(grouping);
+    }
+
+    function joined(voter, grouping) {
+        setGrouping(grouping);
+        voterCreated(voter);
+        groupingCreated(grouping);
     }
 
     return <Box>
-        {!created && <Grid container spacing={2}>
+        {!grouping && <Grid container spacing={2}>
             <Grid item xs>
-                <CreateGrouping created={groupingCreated}/>
+                <CreateGrouping created={_groupingCreated}/>
             </Grid>
             <Divider orientation="vertical" flexItem>
                 OR
             </Divider>
             <Grid item xs>
-                <JoinGrouping joined={voterCreated}/>
+                <JoinGrouping joined={joined}/>
             </Grid>
         </Grid>}
-        {created && grouping && <NewGrouping grouping={grouping} joined={voterCreated}/>}
+        {grouping && <NewGrouping grouping={grouping} joined={joined}/>}
     </Box>
 }
 
