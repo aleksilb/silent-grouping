@@ -14,7 +14,6 @@ function Start({voterCreated, groupingCreated}) {
     }
 
     function joined(voter, grouping) {
-        setGrouping(grouping);
         voterCreated(voter);
         groupingCreated(grouping);
     }

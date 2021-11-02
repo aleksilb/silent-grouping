@@ -8,7 +8,7 @@ import * as Stage from "./scripts/stage";
 import Waiting from "./Components/Waiting";
 import {Box} from "@mui/system";
 
-const GroupingContext = createContext(null);
+export const GroupingContext = createContext(null);
 
 function App() {
     const [stage, setStage] = useState(Stage.Stage.START);

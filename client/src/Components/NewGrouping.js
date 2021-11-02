@@ -1,7 +1,7 @@
 import {Button, Grid, Typography} from "@mui/material";
 import * as Server from "../scripts/server";
-import GroupingInfo from "./GroupingInfo";
 import {Box} from "@mui/system";
+import Title from "./Title";
 
 function NewGrouping({grouping, joined}) {
 
@@ -11,11 +11,7 @@ function NewGrouping({grouping, joined}) {
     }
 
     return <Box>
-        <Box sx={{display:"flex",justifyContent: 'space-between'}}>
-            <Box sx={{width:"300px"}}/>
-            <Typography variant={"h2"}>Invite people</Typography>
-            <GroupingInfo name={grouping.name} description={grouping.description}/>
-        </Box>
+        <Title>Invite people</Title>
         <Grid container spacing={2} sx={{my:0}}>
             <Grid item xs={3}/>
             <Grid item xs={6}>
