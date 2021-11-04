@@ -7,10 +7,13 @@ export function generateTexts(items, canvasWidth, canvasHeight) {
     for(let item of items) {
         const x = Math.round(Math.random() * (canvasWidth - widthPadding));
         const y = Math.round(Math.random() * (canvasHeight - heightPadding) + heightPadding);
-        texts.push(new fabric.Text(item,{
+        let text = new fabric.Text(item,{
             left : x,
-            top : y
-        }));
+            top : y,
+            fontFamily: "Arial"
+        });
+        text.setControlsVisibility({ mtr: false, ml: false, mr: false, mb: false, mt: false, tl: false, tr: false, bl: false, br: false });
+        texts.push(text);
     }
     return texts;
 }

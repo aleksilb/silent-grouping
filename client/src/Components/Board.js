@@ -3,6 +3,9 @@ import {useEffect, useState} from "react";
 import {generateTexts} from '../Text';
 import {Button} from "@mui/material";
 import * as Server from '../scripts/server';
+import Box from "@mui/material/Box";
+import Title from "./Title";
+
 const width = 1500;
 const height = 1000;
 
@@ -30,7 +33,7 @@ function Board(props) {
 
     function getPositions() {
         let positions = [];
-        for(let text of texts) {
+        for (let text of texts) {
             positions.push([
                 text.get('left'),
                 text.get('top')
@@ -39,12 +42,13 @@ function Board(props) {
         return positions;
     }
 
-    return (
-        <div className="Board">
+    return <Box className="Board">
+        <Title>Group items</Title>
+        <Box sx={{border: 1, borderColor: "black", m:2, boxShadow: 3}}>
             <canvas id="canvas" width={width} height={height}/>
-            <Button onClick={sendPositions}>send</Button>
-        </div>
-    );
+        </Box>
+        <Button variant="contained" onClick={sendPositions}>Finished</Button>
+    </Box>;
 }
 
 export default Board;
