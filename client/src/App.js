@@ -1,45 +1,32 @@
 import './App.css';
-import TermList from "./Components/TermList";
-import Board from "./Components/Board";
-import Results from "./Components/Results";
-import {createContext, useEffect, useState} from "react";
+import {createContext, useState} from "react";
 import Start from "./Components/Start";
-import * as Stage from "./scripts/stage";
-import Waiting from "./Components/Waiting";
 import {Box} from "@mui/system";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Grouping from "./Components/Grouping";
+import AutoJoin from "./Components/AutoJoin";
 
 export const GroupingContext = createContext(null);
 
 function App() {
-    const [stage, setStage] = useState(Stage.Stage.START);
-    const [voter, setVoter] = useState(null);
     const [grouping, setGrouping] = useState(null);
-    const StageChecker = Stage.getChecker(setStage);
-
-    useEffect(() => {
-        if (voter != null && StageChecker != null) {
-            StageChecker.checkForStageChange(voter.id);
-        }
-    }, [voter, StageChecker]);
-
-    function pageFinished() {
-        StageChecker.checkForStageChange(voter.id);
-    }
 
     return (
-        <Box className="App"
-             sx={{
-                 pt: 2,
-                 px: 10
-             }}>
+        <Router>
             <GroupingContext.Provider value={grouping}>
-                {stage === Stage.Stage.START && <Start voterCreated={setVoter} groupingCreated={setGrouping}/>}
-                {stage === Stage.Stage.WAITING && <Waiting/>}
-                {stage === Stage.Stage.COLLECTING && <TermList voterId={voter.id} finishFunction={pageFinished}/>}
-                {stage === Stage.Stage.GROUPING && <Board voterId={voter.id} groupingId={grouping.id} finishFunction={pageFinished}/>}
-                {stage === Stage.Stage.DONE && <Results groupingId={grouping.id}/>}
+                <Box className="App"
+                     sx={{
+                         pt: 2,
+                         px: 10
+                     }}>
+                    <Routes>
+                        <Route path="/" element={<Start groupingSelected={setGrouping}/>}/>
+                        <Route path="/grouping/:id" element={<AutoJoin/>}/>
+                        <Route path="/voter/:voterId" element={<Grouping groupingSelected={setGrouping}/>}/>
+                    </Routes>
+                </Box>
             </GroupingContext.Provider>
-        </Box>
+        </Router>
     );
 }
 

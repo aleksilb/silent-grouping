@@ -1,13 +1,14 @@
 import {Button, Grid, Typography} from "@mui/material";
-import * as Server from "../scripts/server";
 import {Box} from "@mui/system";
 import Title from "./Title";
+import {useState} from "react";
+import CreateVoter from "./CreateVoter";
 
-function NewGrouping({grouping, joined}) {
+function NewGrouping({grouping}) {
+    const [join, setJoin] = useState(false);
 
-    async function join() {
-        const voter = await Server.joinGrouping(grouping.id);
-        joined(voter, grouping);
+    async function joinGrouping() {
+        setJoin(true);
     }
 
     return <Box>
@@ -20,11 +21,12 @@ function NewGrouping({grouping, joined}) {
                 </Typography>
                 <Button
                     variant="contained"
-                    onClick={join}>
+                    onClick={joinGrouping}>
                     Start grouping</Button>
             </Grid>
             <Grid item xs={3}/>
         </Grid>
+        {join && <CreateVoter groupingId={grouping.id}/>}
     </Box>
 }
 
