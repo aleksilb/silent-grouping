@@ -3,9 +3,11 @@ import {Box} from "@mui/system";
 import Title from "./Title";
 import {useState} from "react";
 import CreateVoter from "./CreateVoter";
+import CopyText from "./CopyText";
 
 function NewGrouping({grouping}) {
     const [join, setJoin] = useState(false);
+    const joinUrl = window.location.origin + '/grouping/' + grouping.id;
 
     async function joinGrouping() {
         setJoin(true);
@@ -17,7 +19,10 @@ function NewGrouping({grouping}) {
             <Grid item xs={3}/>
             <Grid item xs={6}>
                 <Typography variant={"h6"} sx={{mt: "4px"}}>
-                    Invite people to the grouping with id <Typography component={"span"} sx={{fontWeight:"bold", fontSize:18}}>{grouping.id}</Typography>
+                    Invite people to the grouping with id <CopyText>{grouping.id}</CopyText>
+                </Typography>
+                <Typography variant={"h6"} sx={{mt: "4px"}}>
+                    Or with a link <CopyText>{joinUrl}</CopyText>
                 </Typography>
                 <Button
                     variant="contained"
