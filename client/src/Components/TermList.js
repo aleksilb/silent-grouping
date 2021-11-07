@@ -1,5 +1,5 @@
 import List from '@mui/material/List'
-import {Button, Grid, IconButton, InputAdornment, ListItem, TextField} from "@mui/material";
+import {Button, Grid, IconButton, InputAdornment, ListItem, TextField, Tooltip} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
 import * as Server from "../scripts/server";
@@ -53,14 +53,18 @@ function TermList(props) {
                         onChange={evt => updateNewTerm(evt)}
                         onKeyPress={evt => handleInputKeypress(evt)}
                         value={newTerm}
-                        InputProps={{endAdornment:
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={addNewTerm}
-                                    edge="end">
-                                    <AddIcon/>
-                                </IconButton>
-                            </InputAdornment>}}
+                        InputProps={{
+                            endAdornment:
+                                <InputAdornment position="end">
+                                    <Tooltip title="Add item">
+                                        <IconButton
+                                            onClick={addNewTerm}
+                                            edge="end">
+                                            <AddIcon/>
+                                        </IconButton>
+                                    </Tooltip>
+                                </InputAdornment>
+                        }}
                     />
                     <Box sx={{flexBasis: "100%"}}/>
                     <Button variant="contained" onClick={sendTerms} sx={{my: 3, ml: 3}}>Finish</Button>
@@ -70,9 +74,11 @@ function TermList(props) {
                         return <ListItem
                             key={index}
                             secondaryAction={
-                                <IconButton edge="end" aria-label="delete" onClick={() => deleteTerm(index)}>
-                                    <DeleteIcon/>
-                                </IconButton>
+                                <Tooltip title="Delete item">
+                                    <IconButton edge="end" aria-label="delete" onClick={() => deleteTerm(index)}>
+                                        <DeleteIcon/>
+                                    </IconButton>
+                                </Tooltip>
                             }>
                             {term}
                         </ListItem>
