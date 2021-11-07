@@ -1,7 +1,11 @@
-import {Card, CardContent, Typography} from "@mui/material";
+import {Card, CardContent, IconButton, Typography} from "@mui/material";
 import {grey} from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
+import {Close} from "@mui/icons-material";
 
-function GroupingInfo({name, description}) {
+function GroupingInfo({grouping}) {
+    let navigate = useNavigate();
+
     return <Card sx={{
         width: 300,
         height: 94,
@@ -9,11 +13,14 @@ function GroupingInfo({name, description}) {
         textOverflow: 'ellipsis'
     }}>
         <CardContent sx={{textAlign: "left", px: 1, py:0.5}}>
+            <IconButton sx={{float: "right"}} aria-label="leave" onClick={() => navigate('/leave')}>
+                <Close/>
+            </IconButton>
             <Typography sx={{fontSize:16}}>
-                {name}
+                {grouping.name}
             </Typography>
             <Typography sx={{mb: 1.5, fontSize:14}} color="text.secondary">
-                {description}
+                {grouping.description}
             </Typography>
         </CardContent>
     </Card>

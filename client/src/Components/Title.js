@@ -6,12 +6,12 @@ import {GroupingContext} from "../App";
 
 
 function Title({children}) {
-    const grouping = useContext(GroupingContext)
+    const groupingContext = useContext(GroupingContext)
 
     return <Box sx={{display:"flex",justifyContent: 'space-between'}}>
         <Box sx={{width:"300px"}}/>
         <Typography variant={"h2"}>{children}</Typography>
-        {grouping ? <GroupingInfo name={grouping.name} description={grouping.description}/> : <Box sx={{width:"300px"}}/>}
+        {groupingContext.grouping ? <GroupingInfo grouping={groupingContext.grouping}/> : <Box sx={{width:"300px"}}/>}
     </Box>
 }
 
