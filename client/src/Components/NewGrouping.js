@@ -20,7 +20,7 @@ function NewGrouping({grouping}) {
             <Typography variant={"h6"} sx={{mt: "4px"}}>
                 Invite people to the grouping with id <CopyText>{grouping.id}</CopyText>
             </Typography>
-            <Typography variant={"h6"} sx={{mt: "4px"}}>
+            <Typography variant={"h6"} sx={{mt: "4px", mb:4}}>
                 Or with a link <CopyText>{joinUrl}</CopyText>
             </Typography>
             <Button

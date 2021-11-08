@@ -38,7 +38,7 @@ function Grouping({groupingSelected}) {
         {stage === Stage.Stage.COLLECTING && <TermList voterId={voter.id} finishFunction={pageFinished}/>}
         {stage === Stage.Stage.GROUPING &&
         <Board voterId={voter.id} groupingId={voter.grouping} finishFunction={pageFinished}/>}
-        {stage === Stage.Stage.DONE && <Results groupingId={voter.grouping}/>}
+        {stage === Stage.Stage.DONE && <Results/>}
     </Box>
 }
 
