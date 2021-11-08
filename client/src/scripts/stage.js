@@ -39,7 +39,6 @@ class StageChecker {
     async checkVoterStage(voterId) {
         const voter = await Server.getVoter(voterId);
         const groupingStage = await this.getGroupingStage(voter.grouping);
-        console.log(voter);
         if(groupingStage === Stage.COLLECTING && voter.items_sent) {
             return Stage.WAITING;
         }
@@ -64,7 +63,8 @@ class StageChecker {
     }
 
     async waitForStageChange(voterId)  {
-        if(await this.checkForStageChange(voterId)) {
+        await this.checkForStageChange(voterId);
+        if(this.voterStage !== Stage.WAITING) {
             clearTimeout(this.pollTimer);
         } else {
             this.setPolling(voterId);

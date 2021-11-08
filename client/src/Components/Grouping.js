@@ -4,7 +4,7 @@ import TermList from "./TermList";
 import Board from "./Board";
 import Results from "./Results";
 import Box from "@mui/material/Box";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
 import * as Server from "../scripts/server";
 
@@ -12,7 +12,7 @@ function Grouping({groupingSelected}) {
     let { voterId } = useParams();
     const [voter, setVoter] = useState(null);
     const [stage, setStage] = useState(null);
-    const StageChecker = Stage.getChecker(setStage);
+    const StageChecker = useRef(Stage.getChecker(setStage));
 
     useEffect(() => {
         if(voterId != null) {
@@ -22,7 +22,7 @@ function Grouping({groupingSelected}) {
 
     useEffect(() => {
         if (voter != null && StageChecker != null) {
-            StageChecker.checkForStageChange(voter.id);
+            StageChecker.current.checkForStageChange(voter.id);
         }
         if(voter != null && groupingSelected != null) {
             Server.getGrouping(voter.grouping).then(grouping => groupingSelected(grouping));
@@ -30,7 +30,7 @@ function Grouping({groupingSelected}) {
     }, [voter, StageChecker, groupingSelected]);
 
     function pageFinished() {
-        StageChecker.checkForStageChange(voter.id);
+        StageChecker.current.checkForStageChange(voter.id);
     }
 
     return <Box>
