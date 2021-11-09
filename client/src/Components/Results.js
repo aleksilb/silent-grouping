@@ -23,7 +23,7 @@ function Results() {
     return <div>
         <Title>Results</Title>
         <CenteredPage>
-            Results for grouping {grouping.name}
+            Here are the combined groups of {grouping.name}
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mb:4 }}>
             {groups.map(group =>
                 <Card sx={{minWidth: 150, my:3, mr:3}} raised>

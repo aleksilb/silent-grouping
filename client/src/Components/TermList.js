@@ -1,14 +1,17 @@
 import List from '@mui/material/List'
 import {Button, Divider, IconButton, InputAdornment, ListItem, TextField, Tooltip} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import * as Server from "../scripts/server";
 import Title from "./Title";
 import Box from "@mui/material/Box";
 import AddIcon from '@mui/icons-material/Add';
 import CenteredPage from "./CenteredPage";
+import {GroupingContext} from "../App";
 
 function TermList(props) {
+    const groupingContext = useContext(GroupingContext);
+    const grouping = groupingContext.grouping;
     const [newTerm, setNewTerm] = useState('');
     const [terms, setTerms] = useState([]);
 
@@ -44,6 +47,7 @@ function TermList(props) {
     return <Box>
         <Title>Add Items</Title>
         <CenteredPage>
+            Add items that you think should be in {grouping.name}
             <Box sx={{my: 3}}>
                 <TextField
                     id="new-term"

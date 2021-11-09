@@ -44,6 +44,7 @@ function Board(props) {
 
     return <Box className="Board">
         <Title>Group items</Title>
+        Drag the items that you think belong together close to each other
         <Box sx={{m: 4}}>
             <Box sx={{border: 1, borderColor: "black", boxShadow: 3, width: {width}, margin: "auto"}}>
                 <canvas id="canvas" width={width} height={height}/>
