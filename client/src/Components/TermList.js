@@ -1,5 +1,5 @@
 import List from '@mui/material/List'
-import {Button, IconButton, InputAdornment, ListItem, TextField, Tooltip} from "@mui/material";
+import {Button, Divider, IconButton, InputAdornment, ListItem, TextField, Tooltip} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
 import * as Server from "../scripts/server";
@@ -68,10 +68,11 @@ function TermList(props) {
                 <Box sx={{flexBasis: "100%"}}/>
                 <Button variant="contained" onClick={sendTerms} sx={{my: 3, ml: 3}}>Finish</Button>
             </Box>
-            <List>
+            <List sx={{width:300, margin:"auto"}}>
                 {terms.map((term, index) => {
-                    return <ListItem
+                    return <Box><ListItem
                         key={index}
+                        sx={{py:2}}
                         secondaryAction={
                             <Tooltip title="Delete item">
                                 <IconButton edge="end" aria-label="delete" onClick={() => deleteTerm(index)}>
@@ -81,6 +82,8 @@ function TermList(props) {
                         }>
                         {term}
                     </ListItem>
+                        {index < terms.length - 1 ? <Divider/> : null}
+                    </Box>
                 })}
             </List>
         </CenteredPage>
