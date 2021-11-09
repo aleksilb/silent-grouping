@@ -44,8 +44,10 @@ function Board(props) {
 
     return <Box className="Board">
         <Title>Group items</Title>
-        <Box sx={{border: 1, borderColor: "black", m:2, boxShadow: 3}}>
-            <canvas id="canvas" width={width} height={height}/>
+        <Box sx={{m: 4}}>
+            <Box sx={{border: 1, borderColor: "black", boxShadow: 3, width: {width}, margin: "auto"}}>
+                <canvas id="canvas" width={width} height={height}/>
+            </Box>
         </Box>
         <Button variant="contained" onClick={sendPositions}>Finished</Button>
     </Box>;
