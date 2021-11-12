@@ -8,44 +8,44 @@ export const Stage = {
     WAITING: "waiting"
 }
 
-export function getChecker(changeFunction) {
-    return new StageChecker(changeFunction)
+export function getChecker(voterId, changeFunction, waitFunction) {
+    return new StageChecker(voterId, changeFunction, waitFunction)
 }
 
 class StageChecker {
     POLL_INTERVAL = 2000;
     pollTimer;
+    voterId;
     voterStage;
     stageChange;
 
-    constructor(stageChange) {
+    constructor(voterId, stageChange) {
+        this.voterId = voterId;
         this.stageChange = stageChange;
     }
 
-    async checkForStageChange(voterId) {
-        const currentStage = await this.checkVoterStage(voterId);
-        if(currentStage !== this.voterStage) {
-            this.stageChange(currentStage);
-            this.voterStage = currentStage;
-            if(currentStage === Stage.WAITING) {
-                this.setPolling(voterId);
-            }
-            return true;
-        } else {
-            return false;
+    close() {
+        if(this.pollTimer) {
+            clearTimeout(this.pollTimer);
         }
     }
 
-    async checkVoterStage(voterId) {
-        const voter = await Server.getVoter(voterId);
-        const groupingStage = await this.getGroupingStage(voter.grouping);
-        if(groupingStage === Stage.COLLECTING && voter.items_sent) {
-            return Stage.WAITING;
+    async checkForStageChange() {
+        const voter = await Server.getVoter(this.voterId);
+        let currentStage = await this.getGroupingStage(voter.grouping);
+        if(this.isWaiting(voter, currentStage)) {
+            this.setPolling();
+            currentStage = Stage.WAITING;
         }
-        if(groupingStage === Stage.GROUPING && voter.positions_sent) {
-            return Stage.WAITING;
+        if(currentStage !== this.voterStage) {
+            this.voterStage = currentStage;
+            this.stageChange(currentStage);
         }
-        return groupingStage;
+    }
+
+    isWaiting(voter, stage) {
+        return (stage === Stage.COLLECTING && voter.items_sent)
+            || (stage === Stage.GROUPING && voter.positions_sent);
     }
 
     async getGroupingStage(groupingId) {
@@ -62,16 +62,14 @@ class StageChecker {
         }
     }
 
-    async waitForStageChange(voterId)  {
-        await this.checkForStageChange(voterId);
+    async waitForStageChange()  {
+        await this.checkForStageChange();
         if(this.voterStage !== Stage.WAITING) {
             clearTimeout(this.pollTimer);
-        } else {
-            this.setPolling(voterId);
         }
     }
 
-    setPolling(voterId) {
-        this.pollTimer = setTimeout(() => this.waitForStageChange(voterId), this.POLL_INTERVAL);
+    setPolling() {
+        this.pollTimer = setTimeout(() => this.waitForStageChange(), this.POLL_INTERVAL);
     }
 }

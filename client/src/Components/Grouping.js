@@ -9,14 +9,18 @@ import {useParams} from "react-router-dom";
 import * as Server from "../scripts/server";
 
 function Grouping({groupingSelected}) {
-    let { voterId } = useParams();
+    let {voterId} = useParams();
     const [voter, setVoter] = useState(null);
     const [stage, setStage] = useState(null);
-    const StageChecker = useRef(Stage.getChecker(setStage));
+    const StageChecker = useRef(null);
 
     useEffect(() => {
-        if(voterId != null) {
+        if (voterId != null) {
             Server.getVoter(voterId).then(voter => setVoter(voter));
+            StageChecker.current = Stage.getChecker(voterId, setStage);
+        }
+        return () => {
+            StageChecker.current.close();
         }
     }, [voterId]);
 
@@ -24,7 +28,7 @@ function Grouping({groupingSelected}) {
         if (voter != null && StageChecker != null) {
             StageChecker.current.checkForStageChange(voter.id);
         }
-        if(voter != null && groupingSelected != null) {
+        if (voter != null && groupingSelected != null) {
             Server.getGrouping(voter.grouping).then(grouping => groupingSelected(grouping));
         }
     }, [voter, StageChecker, groupingSelected]);
@@ -34,11 +38,11 @@ function Grouping({groupingSelected}) {
     }
 
     return <Box>
-        {stage === Stage.Stage.WAITING && <Waiting/>}
         {stage === Stage.Stage.COLLECTING && <TermList voterId={voter.id} finishFunction={pageFinished}/>}
         {stage === Stage.Stage.GROUPING &&
         <Board voterId={voter.id} groupingId={voter.grouping} finishFunction={pageFinished}/>}
         {stage === Stage.Stage.DONE && <Results/>}
+        {stage === Stage.Stage.WAITING && <Waiting/>}
     </Box>
 }
 
