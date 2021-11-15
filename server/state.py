@@ -1,7 +1,7 @@
-from grouping import Grouping, Voter
+from grouping import Grouping, Grouper
 
 groupings = []
-voters = []
+groupers = []
 
 
 def get_grouping(grouping_id) -> Grouping:
@@ -15,13 +15,13 @@ def add_grouping(name, description):
     return grouping
 
 
-def get_voter(voter_id) -> Voter:
-    return voters[voter_id]
+def get_grouper(grouper_id) -> Grouper:
+    return groupers[grouper_id]
 
 
-def add_voter(grouping_id):
-    voter_id = len(voters)
+def add_grouper(grouping_id):
+    grouper_id = len(groupers)
     grouping = get_grouping(grouping_id)
-    voter = Voter(voter_id, grouping)
-    voters.append(voter)
-    return voter
+    grouper = Grouper(grouper_id, grouping)
+    groupers.append(grouper)
+    return grouper
