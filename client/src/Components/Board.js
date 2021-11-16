@@ -26,7 +26,7 @@ function Board(props) {
     }, [props.groupingId])
 
     function sendPositions() {
-        Server.sendPositions(props.voterId, getPositions()).then(() => {
+        Server.sendPositions(props.grouperId, getPositions()).then(() => {
             props.finishFunction();
         });
     }

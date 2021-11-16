@@ -8,19 +8,19 @@ export const Stage = {
     WAITING: "waiting"
 }
 
-export function getChecker(voterId, changeFunction, waitFunction) {
-    return new StageChecker(voterId, changeFunction, waitFunction)
+export function getChecker(grouperId, changeFunction, waitFunction) {
+    return new StageChecker(grouperId, changeFunction, waitFunction)
 }
 
 class StageChecker {
     POLL_INTERVAL = 2000;
     pollTimer;
-    voterId;
-    voterStage;
+    grouperId;
+    grouperStage;
     stageChange;
 
-    constructor(voterId, stageChange) {
-        this.voterId = voterId;
+    constructor(grouperId, stageChange) {
+        this.grouperId = grouperId;
         this.stageChange = stageChange;
     }
 
@@ -31,21 +31,21 @@ class StageChecker {
     }
 
     async checkForStageChange() {
-        const voter = await Server.getVoter(this.voterId);
-        let currentStage = await this.getGroupingStage(voter.grouping);
-        if(this.isWaiting(voter, currentStage)) {
+        const grouper = await Server.getGrouper(this.grouperId);
+        let currentStage = await this.getGroupingStage(grouper.grouping.id);
+        if(this.isWaiting(grouper, currentStage)) {
             this.setPolling();
             currentStage = Stage.WAITING;
         }
-        if(currentStage !== this.voterStage) {
-            this.voterStage = currentStage;
+        if(currentStage !== this.grouperStage) {
+            this.grouperStage = currentStage;
             this.stageChange(currentStage);
         }
     }
 
-    isWaiting(voter, stage) {
-        return (stage === Stage.COLLECTING && voter.items_sent)
-            || (stage === Stage.GROUPING && voter.positions_sent);
+    isWaiting(grouper, stage) {
+        return (stage === Stage.COLLECTING && grouper.items_sent)
+            || (stage === Stage.GROUPING && grouper.positions_sent);
     }
 
     async getGroupingStage(groupingId) {
@@ -64,7 +64,7 @@ class StageChecker {
 
     async waitForStageChange()  {
         await this.checkForStageChange();
-        if(this.voterStage !== Stage.WAITING) {
+        if(this.grouperStage !== Stage.WAITING) {
             clearTimeout(this.pollTimer);
         }
     }

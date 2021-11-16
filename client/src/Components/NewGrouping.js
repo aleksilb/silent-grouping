@@ -2,7 +2,7 @@ import {Button, Typography} from "@mui/material";
 import {Box} from "@mui/system";
 import Title from "./Title";
 import {useState} from "react";
-import CreateVoter from "./CreateVoter";
+import CreateGrouper from "./CreateGrouper";
 import CopyText from "./CopyText";
 import CenteredPage from "./CenteredPage";
 
@@ -28,7 +28,7 @@ function NewGrouping({grouping}) {
                 onClick={joinGrouping}>
                 Start grouping</Button>
         </CenteredPage>
-        {join && <CreateVoter groupingId={grouping.id}/>}
+        {join && <CreateGrouper groupingId={grouping.id}/>}
     </Box>
 }
 

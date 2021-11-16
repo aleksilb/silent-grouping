@@ -39,7 +39,7 @@ function TermList(props) {
     }
 
     function sendTerms() {
-        Server.sendTerms(props.voterId, terms).then(() => {
+        Server.sendTerms(props.grouperId, terms).then(() => {
             props.finishFunction();
         });
     }

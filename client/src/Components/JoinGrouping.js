@@ -1,7 +1,7 @@
 import {Button, Stack, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
-import CreateVoter from "./CreateVoter";
+import CreateGrouper from "./CreateGrouper";
 
 function JoinGrouping() {
     const [groupingId, setGroupingId] = useState('');
@@ -33,7 +33,7 @@ function JoinGrouping() {
                 disabled={!enabled}
                 onClick={joinGrouping}>Join</Button>
         </Stack>
-        {join && <CreateVoter groupingId={groupingId}/>}
+        {join && <CreateGrouper groupingId={groupingId}/>}
     </Box>
 }
 

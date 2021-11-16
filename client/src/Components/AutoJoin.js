@@ -1,5 +1,5 @@
 import {Box} from "@mui/system";
-import CreateVoter from "./CreateVoter";
+import CreateGrouper from "./CreateGrouper";
 
 const {useParams} = require("react-router-dom");
 
@@ -8,7 +8,7 @@ function AutoJoin() {
 
     return <Box>
         Joining grouping {id}
-        {id && <CreateVoter groupingId={id} />}
+        {id && <CreateGrouper groupingId={id} />}
     </Box>
 }
 

@@ -16,16 +16,20 @@ export function createGrouping(name, description) {
 }
 
 export function joinGrouping(groupingId) {
-    return post('/voter/'+groupingId, null)
+    return post('/grouper/'+groupingId, null)
         .then(response => response.json());
 }
 
-export function sendPositions(voterId, positions) {
-    return post( '/positions/'+voterId, positions);
+export function leaveGrouping(grouperId) {
+    return fetch(API + '/grouper/'+grouperId, {method: 'DELETE'});
 }
 
-export function sendTerms(voterId, terms) {
-    return post('/items/'+voterId, terms);
+export function sendPositions(grouperId, positions) {
+    return post( '/positions/'+grouperId, positions);
+}
+
+export function sendTerms(grouperId, terms) {
+    return post('/items/'+grouperId, terms);
 }
 
 export function getTerms(groupingId) {
@@ -42,7 +46,7 @@ export function getGrouping(groupingId) {
         .then(response => response.json());
 }
 
-export function getVoter(voterId) {
-    return fetch(API + '/voter/' + voterId)
+export function getGrouper(grouperId) {
+    return fetch(API + '/grouper/' + grouperId)
         .then(response => response.json());
 }

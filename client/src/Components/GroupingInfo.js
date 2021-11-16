@@ -3,7 +3,7 @@ import {grey} from "@mui/material/colors";
 import {useNavigate} from "react-router-dom";
 import {Close} from "@mui/icons-material";
 
-function GroupingInfo({grouping}) {
+function GroupingInfo({grouping, grouperId}) {
     let navigate = useNavigate();
 
     return <Card sx={{
@@ -14,7 +14,7 @@ function GroupingInfo({grouping}) {
     }}>
         <CardContent sx={{textAlign: "left", px: 1, py: 0.5}}>
             <Tooltip title="Leave grouping">
-                <IconButton sx={{float: "right"}} aria-label="leave" onClick={() => navigate('/leave')}>
+                <IconButton sx={{float: "right"}} aria-label="leave" onClick={() => navigate('/leave/'+grouperId)}>
                     <Close/>
                 </IconButton>
             </Tooltip>

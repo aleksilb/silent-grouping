@@ -15,8 +15,7 @@ function App() {
     return (
         <Router>
             <GroupingContext.Provider value={
-                {"grouping":grouping,
-                "setGrouping":setGrouping}}>
+                {"grouping":grouping}}>
                 <Box className="App"
                      sx={{
                          pt: 2,
@@ -25,8 +24,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Start groupingSelected={setGrouping}/>}/>
                         <Route path="/grouping/:id" element={<AutoJoin/>}/>
-                        <Route path="/voter/:voterId" element={<Grouping groupingSelected={setGrouping}/>}/>
-                        <Route path="/leave" element={<AutoLeave groupSetter={setGrouping}/>}/>
+                        <Route path="/grouper/:grouperId" element={<Grouping groupingSelected={setGrouping}/>}/>
+                        <Route path="/leave/:grouperId" element={<AutoLeave groupSetter={setGrouping}/>}/>
                     </Routes>
                 </Box>
             </GroupingContext.Provider>

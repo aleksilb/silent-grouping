@@ -1,14 +1,18 @@
 import {useEffect, useState} from "react";
 import {Box} from "@mui/system";
-import {Navigate} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
+import * as Server from "../scripts/server";
 
 function AutoLeave({groupSetter}) {
+    let {grouperId} = useParams();
     const [left, setLeft] = useState(false);
 
     useEffect(() => {
-        groupSetter(null);
-        setLeft(true);
-    }, [groupSetter]);
+        Server.leaveGrouping(grouperId).then(() => {
+            groupSetter(null);
+            setLeft(true);
+        });
+    }, [groupSetter, grouperId]);
 
     return <Box>
         Leaving grouping
