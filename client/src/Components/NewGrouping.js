@@ -15,7 +15,7 @@ function NewGrouping({grouping}) {
     }
 
     return <Box>
-        <Title>Invite people</Title>
+        <Title grouping={grouping}>Invite people</Title>
         <CenteredPage>
             <Typography variant={"h6"} sx={{mt: "4px"}}>
                 Invite people to the grouping with id <CopyText>{grouping.id}</CopyText>

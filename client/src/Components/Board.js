@@ -9,13 +9,13 @@ import Title from "./Title";
 const width = 1500;
 const height = 1000;
 
-function Board(props) {
+function Board({grouper, finishFunction}) {
     const [texts, setTexts] = useState([]);
 
     useEffect(() => {
         let canvas = new fabric.Canvas('canvas');
 
-        Server.getTerms(props.groupingId).then(items => {
+        Server.getTerms(grouper.id).then(items => {
             let genTexts = generateTexts(items, width, height);
             console.log(genTexts);
             for (let text of genTexts) {
@@ -23,11 +23,11 @@ function Board(props) {
             }
             setTexts(genTexts);
         })
-    }, [props.groupingId])
+    }, [grouper])
 
     function sendPositions() {
-        Server.sendPositions(props.grouperId, getPositions()).then(() => {
-            props.finishFunction();
+        Server.sendPositions(grouper.id, getPositions()).then(() => {
+            finishFunction();
         });
     }
 

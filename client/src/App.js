@@ -7,28 +7,28 @@ import Grouping from "./Components/Grouping";
 import AutoJoin from "./Components/AutoJoin";
 import AutoLeave from "./Components/AutoLeave";
 
-export const GroupingContext = createContext(null);
+export const GrouperContext = createContext(null);
 
 function App() {
-    const [grouping, setGrouping] = useState(null);
+    const [grouper, setGrouper] = useState(null);
 
     return (
         <Router>
-            <GroupingContext.Provider value={
-                {"grouping":grouping}}>
+            <GrouperContext.Provider value={grouper}>
                 <Box className="App"
                      sx={{
                          pt: 2,
                          px: 10
                      }}>
                     <Routes>
-                        <Route path="/" element={<Start groupingSelected={setGrouping}/>}/>
+                        <Route path="/" element={<Start/>}/>
                         <Route path="/grouping/:id" element={<AutoJoin/>}/>
-                        <Route path="/grouper/:grouperId" element={<Grouping groupingSelected={setGrouping}/>}/>
-                        <Route path="/leave/:grouperId" element={<AutoLeave groupSetter={setGrouping}/>}/>
+                        <Route path="/grouper/:grouperId" element={<Grouping grouperSetter={setGrouper}/>}/>
+                        <Route path="/leave/:grouperId" element={<AutoLeave grouperSetter={setGrouper}/>}/>
+                        <Route path="/leave" element={<AutoLeave grouperSetter={setGrouper}/>}/>
                     </Routes>
                 </Box>
-            </GroupingContext.Provider>
+            </GrouperContext.Provider>
         </Router>
     );
 }

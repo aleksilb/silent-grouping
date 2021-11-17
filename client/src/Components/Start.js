@@ -5,19 +5,14 @@ import JoinGrouping from "./JoinGrouping";
 import NewGrouping from "./NewGrouping";
 import {Divider, Grid} from "@mui/material";
 
-function Start({groupingSelected}) {
+function Start() {
     const [grouping, setGrouping] = useState(null);
-
-    function _groupingCreated(grouping) {
-        setGrouping(grouping);
-        groupingSelected(grouping);
-    }
 
     return <Box>
         {!grouping && <Box>
             <Grid container spacing={2}>
                 <Grid item xs>
-                    <CreateGrouping created={_groupingCreated}/>
+                    <CreateGrouping created={setGrouping}/>
                 </Grid>
                 <Divider orientation="vertical" flexItem>
                     OR

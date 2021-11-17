@@ -8,40 +8,36 @@ import {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
 import * as Server from "../scripts/server";
 
-function Grouping({groupingSelected}) {
+function Grouping({grouperSetter}) {
     let {grouperId} = useParams();
     const [grouper, setGrouper] = useState(null);
     const [stage, setStage] = useState(null);
     const StageChecker = useRef(null);
 
     useEffect(() => {
-        if (grouperId != null) {
-            Server.getGrouper(grouperId).then(grouper => setGrouper(grouper));
+        if (grouperId != null && grouperSetter != null) {
+            Server.getGrouper(grouperId).then(grouper => {
+                setGrouper(grouper);
+                grouperSetter(grouper);
+            });
             StageChecker.current = Stage.getChecker(grouperId, setStage);
+            StageChecker.current.checkForStageChange(grouperId);
         }
         return () => {
-            StageChecker.current.close();
+            if(StageChecker.current != null) {
+                StageChecker.current.close();
+            }
         }
-    }, [grouperId]);
-
-    useEffect(() => {
-        if (grouper != null && StageChecker != null) {
-            StageChecker.current.checkForStageChange(grouper.id);
-        }
-        if (grouper != null && groupingSelected != null) {
-            Server.getGrouping(grouper.grouping.id).then(grouping => groupingSelected(grouping));
-        }
-    }, [grouper, StageChecker, groupingSelected]);
+    }, [grouperId, grouperSetter]);
 
     function pageFinished() {
         StageChecker.current.checkForStageChange(grouper.id);
     }
 
     return <Box>
-        {stage === Stage.Stage.COLLECTING && <TermList grouperId={grouper.id} finishFunction={pageFinished}/>}
-        {stage === Stage.Stage.GROUPING &&
-        <Board grouperId={grouper.id} groupingId={grouper.grouping.id} finishFunction={pageFinished}/>}
-        {stage === Stage.Stage.DONE && <Results/>}
+        {stage === Stage.Stage.COLLECTING && <TermList grouper={grouper} finishFunction={pageFinished}/>}
+        {stage === Stage.Stage.GROUPING && <Board grouper={grouper} finishFunction={pageFinished}/>}
+        {stage === Stage.Stage.DONE && <Results grouper={grouper}/>}
         {stage === Stage.Stage.WAITING && <Waiting/>}
     </Box>
 }

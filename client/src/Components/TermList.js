@@ -1,17 +1,15 @@
 import List from '@mui/material/List'
 import {Button, Divider, IconButton, InputAdornment, ListItem, TextField, Tooltip} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useContext, useState} from "react";
+import {useState} from "react";
 import * as Server from "../scripts/server";
 import Title from "./Title";
 import Box from "@mui/material/Box";
 import AddIcon from '@mui/icons-material/Add';
 import CenteredPage from "./CenteredPage";
-import {GroupingContext} from "../App";
 
-function TermList(props) {
-    const groupingContext = useContext(GroupingContext);
-    const grouping = groupingContext.grouping;
+function TermList({grouper, finishFunction}) {
+    const grouping = grouper.grouping;
     const [newTerm, setNewTerm] = useState('');
     const [terms, setTerms] = useState([]);
 
@@ -39,8 +37,8 @@ function TermList(props) {
     }
 
     function sendTerms() {
-        Server.sendTerms(props.grouperId, terms).then(() => {
-            props.finishFunction();
+        Server.sendTerms(grouper.id, terms).then(() => {
+            finishFunction();
         });
     }
 

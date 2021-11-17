@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import * as Server from '../scripts/server';
 import List from "@mui/material/List";
 import {Button, Card, ListItem} from "@mui/material";
@@ -6,11 +6,9 @@ import Title from "./Title";
 import CenteredPage from "./CenteredPage";
 import {useNavigate} from "react-router-dom";
 import {Box} from "@mui/system";
-import {GroupingContext} from "../App";
 
-function Results() {
-    const groupingContext = useContext(GroupingContext);
-    const grouping = groupingContext.grouping;
+function Results({grouper}) {
+    const grouping = grouper.grouping;
     let navigate = useNavigate();
     const [groups, setGroups] = useState([]);
 
@@ -18,7 +16,7 @@ function Results() {
         Server.getGroups(grouping.id).then(groups => {
             setGroups(groups);
         });
-    }, [grouping.id]);
+    }, [grouping]);
 
     return <div>
         <Title>Results</Title>
