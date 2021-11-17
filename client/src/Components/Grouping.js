@@ -8,17 +8,16 @@ import {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
 import * as Server from "../scripts/server";
 
-function Grouping({grouperSetter}) {
+function Grouping() {
     let {grouperId} = useParams();
     const [grouper, setGrouper] = useState(null);
     const [stage, setStage] = useState(null);
     const StageChecker = useRef(null);
 
     useEffect(() => {
-        if (grouperId != null && grouperSetter != null) {
+        if (grouperId != null) {
             Server.getGrouper(grouperId).then(grouper => {
                 setGrouper(grouper);
-                grouperSetter(grouper);
             });
             StageChecker.current = Stage.getChecker(grouperId, setStage);
             StageChecker.current.checkForStageChange(grouperId);
@@ -28,7 +27,7 @@ function Grouping({grouperSetter}) {
                 StageChecker.current.close();
             }
         }
-    }, [grouperId, grouperSetter]);
+    }, [grouperId]);
 
     function pageFinished() {
         StageChecker.current.checkForStageChange(grouper.id);

@@ -43,7 +43,7 @@ function TermList({grouper, finishFunction}) {
     }
 
     return <Box>
-        <Title>Add Items</Title>
+        <Title grouper={grouper}>Add Items</Title>
         <CenteredPage>
             Add items that you think should be in {grouping.name}
             <Box sx={{my: 3}}>

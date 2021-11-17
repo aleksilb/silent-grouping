@@ -19,7 +19,7 @@ function Results({grouper}) {
     }, [grouping]);
 
     return <div>
-        <Title>Results</Title>
+        <Title grouper={grouper}>Results</Title>
         <CenteredPage>
             Here are the combined groups of {grouping.name}
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mb:4 }}>

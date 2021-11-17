@@ -15,7 +15,7 @@ function Board({grouper, finishFunction}) {
     useEffect(() => {
         let canvas = new fabric.Canvas('canvas');
 
-        Server.getTerms(grouper.id).then(items => {
+        Server.getTerms(grouper.grouping.id).then(items => {
             let genTexts = generateTexts(items, width, height);
             console.log(genTexts);
             for (let text of genTexts) {
@@ -43,7 +43,7 @@ function Board({grouper, finishFunction}) {
     }
 
     return <Box className="Board">
-        <Title>Group items</Title>
+        <Title grouper={grouper}>Group items</Title>
         Drag the items that you think belong together close to each other
         <Box sx={{m: 4}}>
             <Box sx={{border: 1, borderColor: "black", boxShadow: 3, width: {width}, margin: "auto"}}>

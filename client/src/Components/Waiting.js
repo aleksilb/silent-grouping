@@ -3,9 +3,9 @@ import Title from "./Title";
 import CenteredPage from "./CenteredPage";
 import {CircularProgress, Typography} from "@mui/material";
 
-function Waiting() {
+function Waiting({grouper}) {
     return <Box>
-        <Title>Wait for others</Title>
+        <Title grouper={grouper}>Wait for others</Title>
         <CenteredPage>
             <Typography>Please wait while others finish this stage</Typography>
             <CircularProgress sx={{mt:3}}/>

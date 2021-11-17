@@ -3,7 +3,7 @@ import {Box} from "@mui/system";
 import {Navigate, useParams} from "react-router-dom";
 import * as Server from "../scripts/server";
 
-function AutoLeave({grouperSetter}) {
+function AutoLeave() {
     let {grouperId} = useParams();
     const [left, setLeft] = useState(false);
 
@@ -15,8 +15,7 @@ function AutoLeave({grouperSetter}) {
         } else {
             setLeft(true);
         }
-        grouperSetter(null);
-    }, [grouperSetter, grouperId]);
+    }, [grouperId]);
 
     return <Box>
         Leaving grouping
