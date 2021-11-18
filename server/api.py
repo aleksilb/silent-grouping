@@ -80,8 +80,8 @@ class EnumHandler(jsonpickle.handlers.BaseHandler):
     def restore(self, obj):
         pass
 
-    def flatten(self, obj, data):
-        return obj.value
+    def flatten(self, enum: Enum, data):
+        return enum.value
 
 
 if __name__ == "__main__":
