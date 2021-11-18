@@ -23,7 +23,8 @@ class Grouping:
     groupers_sent_items: int
     groupers_sent_positions: int
 
-    def __init__(self, grouping_id, name, description):
+    def __init__(self, name, description):
+        grouping_id = name.strip().lower().replace(" ", "_")
         self.id = grouping_id
         self.name = name
         self.description = description

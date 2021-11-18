@@ -23,13 +23,13 @@ def new_grouping():
 
 @app.route('/grouping/<grouping_id>', methods=['GET'])
 def fetch_grouping(grouping_id):
-    grouping = get_grouping(int(grouping_id))
+    grouping = get_grouping(grouping_id)
     return json_response(grouping)
 
 
 @app.route('/grouper/<grouping_id>', methods=['POST'])
 def new_grouper(grouping_id):
-    grouper = add_grouper(int(grouping_id))
+    grouper = add_grouper(grouping_id)
     return json_response(grouper)
 
 
@@ -56,7 +56,7 @@ def add_items(grouper_id):
 
 @app.route('/items/<grouping_id>', methods=['GET'])
 def get_items(grouping_id):
-    grouping = get_grouping(int(grouping_id))
+    grouping = get_grouping(grouping_id)
     return json_response(grouping.items)
 
 
@@ -70,7 +70,7 @@ def post_positions(grouper_id):
 
 @app.route('/groups/<grouping_id>', methods=['GET'])
 def get_groups(grouping_id):
-    grouping = get_grouping(int(grouping_id))
+    grouping = get_grouping(grouping_id)
     return json_response(grouping.groups)
 
 

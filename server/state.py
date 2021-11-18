@@ -1,6 +1,6 @@
 from grouping import Grouping, Grouper
 
-groupings = []
+groupings = {}
 groupers = []
 
 
@@ -8,10 +8,10 @@ def get_grouping(grouping_id) -> Grouping:
     return groupings[grouping_id]
 
 
+# TODO: Grouping with the same name will overwrite older grouping
 def add_grouping(name, description):
-    grouping_id = len(groupings)
-    grouping = Grouping(grouping_id, name, description)
-    groupings.append(grouping)
+    grouping = Grouping(name, description)
+    groupings[grouping.id] = grouping
     return grouping
 
 
