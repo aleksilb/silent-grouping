@@ -40,13 +40,14 @@ class Grouping:
 
     def remove_grouper(self):
         self.num_of_groupers -= 1
-        if (self.stage == Stage.COLLECTING) & (self.num_of_groupers == self.groupers_sent_items):
-            self.stage = Stage.GROUPING
-        if (self.stage == Stage.GROUPING) & (self.num_of_groupers == self.groupers_sent_positions):
-            self.cluster()
+        self.check_stage()
 
     def add_items(self, items):
-        self.items += items
+        for item in items:
+            trimmed = item.strip()
+            added = any(i.casefold() == trimmed.casefold() for i in self.items)
+            if not added:
+                self.items.append(trimmed)
 
     def add_positions(self, positions):
         self.positions.append(positions)
@@ -54,12 +55,19 @@ class Grouping:
 
     def grouper_sent_items(self):
         self.groupers_sent_items += 1
-        if self.num_of_groupers == self.groupers_sent_items:
-            self.stage = Stage.GROUPING
+        self.check_stage()
 
     def grouper_sent_positions(self):
         self.groupers_sent_positions += 1
-        if self.num_of_groupers == self.groupers_sent_positions:
+        self.check_stage()
+
+    def check_stage(self):
+        if self.num_of_groupers <= 0:
+            self.stage = Stage.DONE
+        elif (self.stage == Stage.COLLECTING) & (self.num_of_groupers == self.groupers_sent_items):
+            self.stage = Stage.GROUPING
+        elif (self.stage == Stage.GROUPING) & (self.num_of_groupers == self.groupers_sent_positions):
+            self.stage = Stage.DONE
             self.cluster()
 
     def cluster(self):
