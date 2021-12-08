@@ -16,9 +16,6 @@ class Grouping:
     name: str
     description: str
     stage: Stage
-    groups: list[list[str]]
-    items: list[str]
-    positions: list[list[list[int]]]
     num_of_groupers: int
     groupers_sent_items: int
     groupers_sent_positions: int
