@@ -28,11 +28,11 @@ export function sendPositions(grouperId, positions) {
     return post( '/positions/'+grouperId, positions);
 }
 
-export function sendTerms(grouperId, terms) {
-    return post('/items/'+grouperId, terms);
+export function sendItems(grouperId, items) {
+    return post('/items/'+grouperId, items);
 }
 
-export function getTerms(groupingId) {
+export function getItems(groupingId) {
     return fetch(API + '/items/'+groupingId).then(response => response.json());
 }
 

@@ -15,7 +15,7 @@ function Board({grouper, finishFunction}) {
     useEffect(() => {
         let canvas = new fabric.Canvas('canvas');
 
-        Server.getTerms(grouper.grouping.id).then(items => {
+        Server.getItems(grouper.grouping.id).then(items => {
             let genTexts = generateTexts(items, width, height);
             console.log(genTexts);
             for (let text of genTexts) {

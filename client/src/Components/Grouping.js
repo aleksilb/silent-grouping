@@ -1,6 +1,6 @@
 import * as Stage from "../scripts/stage";
 import Waiting from "./Waiting";
-import TermList from "./TermList";
+import ItemList from "./ItemList";
 import Board from "./Board";
 import Results from "./Results";
 import Box from "@mui/material/Box";
@@ -34,7 +34,7 @@ function Grouping() {
     }
 
     return <Box>
-        {stage === Stage.Stage.COLLECTING && <TermList grouper={grouper} finishFunction={pageFinished}/>}
+        {stage === Stage.Stage.COLLECTING && <ItemList grouper={grouper} finishFunction={pageFinished}/>}
         {stage === Stage.Stage.GROUPING && <Board grouper={grouper} finishFunction={pageFinished}/>}
         {stage === Stage.Stage.DONE && <Results grouper={grouper}/>}
         {stage === Stage.Stage.WAITING && <Waiting/>}

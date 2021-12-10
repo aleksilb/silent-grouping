@@ -8,36 +8,36 @@ import Box from "@mui/material/Box";
 import AddIcon from '@mui/icons-material/Add';
 import CenteredPage from "./CenteredPage";
 
-function TermList({grouper, finishFunction}) {
+function ItemList({grouper, finishFunction}) {
     const grouping = grouper.grouping;
-    const [newTerm, setNewTerm] = useState('');
-    const [terms, setTerms] = useState([]);
+    const [newItem, setNewItem] = useState('');
+    const [items, setItems] = useState([]);
 
-    function updateNewTerm(event) {
-        setNewTerm(event.target.value)
+    function updateNewItem(event) {
+        setNewItem(event.target.value)
     }
 
     function handleInputKeypress(event) {
         if (event.key === "Enter") {
-            addNewTerm();
+            addNewItem();
         }
     }
 
-    function addNewTerm() {
-        setTerms((prevState => ([
-            ...prevState, newTerm
+    function addNewItem() {
+        setItems((prevState => ([
+            ...prevState, newItem
         ])));
-        setNewTerm('');
+        setNewItem('');
     }
 
-    function deleteTerm(index) {
-        const newTerms = Array.from(terms);
-        newTerms.splice(index, 1);
-        setTerms(newTerms);
+    function deleteItem(index) {
+        const newItems = Array.from(items);
+        newItems.splice(index, 1);
+        setItems(newItems);
     }
 
-    function sendTerms() {
-        Server.sendTerms(grouper.id, terms).then(() => {
+    function sendItems() {
+        Server.sendItems(grouper.id, items).then(() => {
             finishFunction();
         });
     }
@@ -48,18 +48,18 @@ function TermList({grouper, finishFunction}) {
             Add items that you think should be in {grouping.name}
             <Box sx={{my: 3}}>
                 <TextField
-                    id="new-term"
+                    id="new-item"
                     label="Item"
                     variant="outlined"
-                    onChange={evt => updateNewTerm(evt)}
+                    onChange={evt => updateNewItem(evt)}
                     onKeyPress={evt => handleInputKeypress(evt)}
-                    value={newTerm}
+                    value={newItem}
                     InputProps={{
                         endAdornment:
                             <InputAdornment position="end">
                                 <Tooltip title="Add item">
                                     <IconButton
-                                        onClick={addNewTerm}
+                                        onClick={addNewItem}
                                         edge="end">
                                         <AddIcon/>
                                     </IconButton>
@@ -68,23 +68,23 @@ function TermList({grouper, finishFunction}) {
                     }}
                 />
                 <Box sx={{flexBasis: "100%"}}/>
-                <Button variant="contained" onClick={sendTerms} sx={{my: 3, ml: 3}}>Finish</Button>
+                <Button variant="contained" onClick={sendItems} sx={{my: 3, ml: 3}}>Finish</Button>
             </Box>
             <List sx={{width:300, margin:"auto"}}>
-                {terms.map((term, index) => {
+                {items.map((item, index) => {
                     return <Box><ListItem
                         key={index}
                         sx={{py:2}}
                         secondaryAction={
                             <Tooltip title="Delete item">
-                                <IconButton edge="end" aria-label="delete" onClick={() => deleteTerm(index)}>
+                                <IconButton edge="end" aria-label="delete" onClick={() => deleteItem(index)}>
                                     <DeleteIcon/>
                                 </IconButton>
                             </Tooltip>
                         }>
-                        {term}
+                        {item}
                     </ListItem>
-                        {index < terms.length - 1 ? <Divider/> : null}
+                        {index < items.length - 1 ? <Divider/> : null}
                     </Box>
                 })}
             </List>
@@ -92,4 +92,4 @@ function TermList({grouper, finishFunction}) {
     </Box>
 }
 
-export default TermList;
+export default ItemList;
