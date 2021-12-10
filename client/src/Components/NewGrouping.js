@@ -3,7 +3,6 @@ import {Box} from "@mui/system";
 import Title from "./Title";
 import {useState} from "react";
 import CreateGrouper from "./CreateGrouper";
-import CopyText from "./CopyText";
 import CenteredPage from "./CenteredPage";
 
 function NewGrouping({grouping}) {
@@ -18,10 +17,10 @@ function NewGrouping({grouping}) {
         <Title grouping={grouping}>Invite people</Title>
         <CenteredPage>
             <Typography variant={"h6"} sx={{mt: "4px"}}>
-                Invite people to the grouping with id <CopyText>{grouping.id}</CopyText>
+                Invite people to the grouping with id {grouping.id}
             </Typography>
             <Typography variant={"h6"} sx={{mt: "4px", mb:4}}>
-                Or with a link <CopyText>{joinUrl}</CopyText>
+                Or with a link {joinUrl}
             </Typography>
             <Button
                 variant="contained"
