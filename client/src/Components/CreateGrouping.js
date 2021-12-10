@@ -1,4 +1,4 @@
-import {Button, Stack, TextField} from "@mui/material";
+import {Button, Stack, TextField, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import * as Server from '../scripts/server';
 import Box from "@mui/material/Box";
@@ -23,7 +23,7 @@ function CreateGrouping({created}) {
     }
 
     return <Box >
-        <h1>Start a New Grouping</h1>
+        <Typography variant={"h2"}>Start a New Grouping</Typography>
         <Stack sx={{p:5}} spacing={2}>
             <TextField
                 id="name-field"

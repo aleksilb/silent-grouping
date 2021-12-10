@@ -1,4 +1,4 @@
-import {Button, Stack, TextField} from "@mui/material";
+import {Button, Stack, TextField, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import CreateGrouper from "./CreateGrouper";
@@ -21,7 +21,7 @@ function JoinGrouping() {
     }
 
     return <Box>
-        <h1>Join a Grouping</h1>
+        <Typography variant={"h2"}>Join a Grouping</Typography>
         <Stack sx={{p: 5}} spacing={2}>
             <TextField
                 id="grouping-field"
