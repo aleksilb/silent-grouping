@@ -1,4 +1,4 @@
-const API = 'http://localhost:5000';
+const API = 'http://flask-env.eba-ytwz9wjy.us-west-2.elasticbeanstalk.com'; //TODO: Get from environment variable
 
 function post(url, body) {
     return fetch(API + url, {
