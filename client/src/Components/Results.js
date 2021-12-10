@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import * as Server from '../scripts/server';
 import List from "@mui/material/List";
-import {Button, Card, ListItem} from "@mui/material";
+import {Button, Card, ListItem, Typography} from "@mui/material";
 import Title from "./Title";
 import CenteredPage from "./CenteredPage";
 import {useNavigate} from "react-router-dom";
@@ -21,10 +21,10 @@ function Results({grouper}) {
     return <div>
         <Title grouper={grouper}>Results</Title>
         <CenteredPage>
-            Here are the combined groups of {grouping.name}
+            Here are the combined groups of <Typography component={"span"} sx={{fontWeight: "bold", fontSize: 16}}>{grouping.name}</Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mb:4 }}>
             {groups.map(group =>
-                <Card sx={{minWidth: 150, my:3, mr:3}} raised>
+                <Card sx={{minWidth: 150, my:3, mx:3}} raised>
                     <List>
                         {group.map((item, index) =>
                             <ListItem key={index}>{item}</ListItem>)}

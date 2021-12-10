@@ -1,5 +1,5 @@
 import List from '@mui/material/List'
-import {Button, Divider, IconButton, InputAdornment, ListItem, TextField, Tooltip} from "@mui/material";
+import {Button, Divider, IconButton, InputAdornment, ListItem, TextField, Tooltip, Typography} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useState} from "react";
 import * as Server from "../scripts/server";
@@ -7,6 +7,7 @@ import Title from "./Title";
 import Box from "@mui/material/Box";
 import AddIcon from '@mui/icons-material/Add';
 import CenteredPage from "./CenteredPage";
+import {KeyboardArrowRight} from "@mui/icons-material";
 
 function ItemList({grouper, finishFunction}) {
     const grouping = grouper.grouping;
@@ -45,7 +46,7 @@ function ItemList({grouper, finishFunction}) {
     return <Box>
         <Title grouper={grouper}>Add Items</Title>
         <CenteredPage>
-            Add items that you think should be in {grouping.name}
+            Add items that you think should be in grouping <Typography component={"span"} sx={{fontWeight: "bold", fontSize: 16}}>{grouping.name}</Typography> and then click continue
             <Box sx={{my: 3}}>
                 <TextField
                     id="new-item"
@@ -68,7 +69,7 @@ function ItemList({grouper, finishFunction}) {
                     }}
                 />
                 <Box sx={{flexBasis: "100%"}}/>
-                <Button variant="contained" onClick={sendItems} sx={{my: 3, ml: 3}}>Finish</Button>
+                <Button variant="contained" onClick={sendItems} sx={{my: 3, ml: 3}} endIcon={<KeyboardArrowRight/>}>Continue</Button>
             </Box>
             <List sx={{width:300, margin:"auto"}}>
                 {items.map((item, index) => {

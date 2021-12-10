@@ -5,6 +5,7 @@ import {Button} from "@mui/material";
 import * as Server from '../scripts/server';
 import Box from "@mui/material/Box";
 import Title from "./Title";
+import {KeyboardArrowRight} from "@mui/icons-material";
 
 const width = 1500;
 const height = 1000;
@@ -44,13 +45,13 @@ function Board({grouper, finishFunction}) {
 
     return <Box className="Board">
         <Title grouper={grouper}>Group items</Title>
-        Drag the items that you think belong together close to each other
+        Drag the items that you think belong together close to each other and then click continue
         <Box sx={{m: 4}}>
             <Box sx={{border: 1, borderColor: "black", boxShadow: 3, width: {width}, margin: "auto"}}>
                 <canvas id="canvas" width={width} height={height}/>
             </Box>
         </Box>
-        <Button variant="contained" onClick={sendPositions}>Finished</Button>
+        <Button variant="contained" onClick={sendPositions} sx={{my: 3, ml: 3}} endIcon={<KeyboardArrowRight/>}>Continue</Button>
     </Box>;
 }
 
